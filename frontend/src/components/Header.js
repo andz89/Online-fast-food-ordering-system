@@ -2,7 +2,7 @@ import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import logo from "../assets/panda.png";
-import { useLogoutMutation } from "../features/authUser/usersApiSlice";
+import { useSellerLogoutMutation } from "../features/authUser/usersApiSlice";
 import { logout } from "../features/authUser/authSlice";
 // import LoadingSpinner from "./LoadingSpinner";
 
@@ -10,7 +10,7 @@ const Header = () => {
   const navigage = useNavigate();
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
-  const [logoutApiCall, { isLoading }] = useLogoutMutation();
+  const [logoutApiCall, { isLoading }] = useSellerLogoutMutation();
   const logoutHanler = async () => {
     try {
       await logoutApiCall().unwrap();

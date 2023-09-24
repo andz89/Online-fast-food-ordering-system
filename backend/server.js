@@ -28,7 +28,7 @@ app.use("/api/seller", sellerRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/token", tokenRoutes);
 app.use("/api/foods", foodsRoutes);
-app.use(express.static("backend/public"));
+app.use(express.static("backend/public/images"));
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();
   app.use(express.static(path.join(__dirname, "/frontend/build")));

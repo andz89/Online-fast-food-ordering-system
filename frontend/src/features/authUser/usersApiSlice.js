@@ -1,6 +1,6 @@
 import { apiSlice } from "../api/apiSlice";
 const USERS_URL = "/api/users";
-const ADMIN = "/api/admin";
+const SELLER = "/api/seller";
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
@@ -44,12 +44,18 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
     }),
 
-    //admin ------------------
-    adminLogin: builder.mutation({
+    //seller ------------------
+    sellerLogin: builder.mutation({
       query: (data) => ({
-        url: `${ADMIN}/auth`,
+        url: `${SELLER}/auth`,
         method: "POST",
         body: data,
+      }),
+    }),
+    sellerLogout: builder.mutation({
+      query: () => ({
+        url: `${USERS_URL}/logout`,
+        method: "POST",
       }),
     }),
   }),
@@ -61,5 +67,6 @@ export const {
   useUpdateProfileMutation,
   useUpdatePasswordMutation,
   useRefreshMutation,
-  useAdminLoginMutation,
+  useSellerLoginMutation,
+  useSellerLogoutMutation,
 } = usersApiSlice;

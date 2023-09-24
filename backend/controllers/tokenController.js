@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
-import Organizer from "../models/adminModel.js";
+import Seller from "../models/sellerModel.js";
 
 import jwt from "jsonwebtoken";
 import { generateAccessToken } from "../utils/generateToken.js";
@@ -9,7 +9,7 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
   let token;
 
   token = req.cookies.jwt;
-  console.log("from token");
+
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -17,8 +17,8 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
       let user;
       if (decoded.userId.roles[0] === "user") {
         user = await User.findById(decoded.userId).select("-password");
-      } else if (decoded.userId.roles) {
-        user = await Organizer.findById(decoded.userId).select("-password");
+      } else if (decoded.userId.roles[0] === "seller") {
+        user = await Seller.findById(decoded.userId).select("-password");
       } else {
         res.status(401);
         throw new Error("Not authorized, token failed");

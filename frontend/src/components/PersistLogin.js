@@ -28,7 +28,7 @@ const PersistLogin = () => {
     // Avoids unwanted call to verifyRefreshToken
 
     !userInfo?.data ? verifyRefreshToken() : setIsLoading(false);
-    console.log(userInfo);
+
     return () => {
       isMounted = false;
     };

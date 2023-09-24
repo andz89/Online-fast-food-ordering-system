@@ -2,10 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Header from "../../components/Header";
-import { useAdminLoginMutation } from "../../features/authUser/usersApiSlice";
+import { useSellerLoginMutation } from "../../features/authUser/usersApiSlice";
 import { setCredentials } from "../../features/authUser/authSlice";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import logo from "../../assets/panda.png";
@@ -18,7 +18,7 @@ const Login = () => {
   const { email, password } = formData;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [login, { isLoading }] = useAdminLoginMutation();
+  const [login, { isLoading }] = useSellerLoginMutation();
   const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const Login = () => {
       };
       dispatch(setCredentials({ data }));
       //   Set the token in cookies
-      toast.success("Hello" + " " + res.data.name + ", Welcome back!", {
+      toast.success(`${res.data.name}  Welcome back!`, {
         position: "top-left",
         autoClose: 5000,
         hideProgressBar: true,
@@ -72,22 +72,25 @@ const Login = () => {
     <>
       {isLoading && <LoadingSpinner />}
       <Header />
-      <form
-        onSubmit={onSubmit}
-        className="w-[400px] shadow-md mx-auto mt-12 text-white bg-white border-[1px] border-slate-500 rounded-md p-5"
-      >
-        <div className="flex    my-2 justify-center flex-col items-center">
-          <div className="flex justify-center bg-white rounded p-2 w-[50px] m-auto">
-            {" "}
-            <img src={logo} width="40" />{" "}
-          </div>
-          <div className="flex items-center">
-            <span className="text-[#D70F64] flex-1  whitespace-nowrap font-semibold text-2xl">
-              Seller Login
-            </span>
+      <div className="flex  mt-12  mb-2 justify-center flex-col items-center">
+        <div className="flex justify-center bg-white rounded p-2 w-[50px] m-auto">
+          <img src={logo} width="40" alt="" />
+        </div>
+        <div className="flex items-center flex-col">
+          <span className="text-[#D70F64] flex-1  whitespace-nowrap font-semibold text-2xl">
+            Seller Login
+          </span>
+          <div className="text-slate-700 hover:underline italic cursor-pointer">
+            <Link to={"/seller-registration"}>
+              <small> Apply as Seller</small>
+            </Link>
           </div>
         </div>
-
+      </div>
+      <form
+        onSubmit={onSubmit}
+        className="w-[400px] shadow-md mx-auto p-5 text-white bg-white border-[1px] border-slate-500 rounded-md  "
+      >
         <div className="mb-6">
           <label
             htmlFor="email"

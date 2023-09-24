@@ -34,8 +34,8 @@ const addFood = asyncHandler(async (req, res) => {
     image_one: req.body.image_one,
     image_two: req.body.image_two,
   });
-  food.image_one = process.env.DOMAIN + food.image_one;
-  food.image_two = process.env.DOMAIN + food.image_two;
+  food.image_one = process.env.DOMAIN + "/" + food.image_one;
+  food.image_two = process.env.DOMAIN + "/" + food.image_two;
   res.json({ food });
 });
 // @desc    Get organizer posts
@@ -44,14 +44,13 @@ const addFood = asyncHandler(async (req, res) => {
 const getFoods = asyncHandler(async (req, res) => {
   const foods = await Food.find();
 
-  foods[0].image_one = process.env.DOMAIN + foods[0].image_one;
-  foods[0].image_two = process.env.DOMAIN + foods[0].image_two;
-
-  if (foods) {
+  if (foods.length !== 0) {
+    foods[0].image_one = process.env.DOMAIN + "/" + foods[0].image_one;
+    foods[0].image_two = process.env.DOMAIN + "/" + foods[0].image_two;
     res.json(foods);
   } else {
     res.status(404);
-    throw new Error("foods not found");
+    throw new Error("No Item Found");
   }
 });
 const getPublicPosts = asyncHandler(async (req, res) => {

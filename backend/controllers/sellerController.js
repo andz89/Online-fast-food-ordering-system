@@ -11,7 +11,7 @@ import {
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-
+  console.log(email);
   const user = await Seller.findOne({ email });
 
   if (user && (await user.matchPassword(password))) {
