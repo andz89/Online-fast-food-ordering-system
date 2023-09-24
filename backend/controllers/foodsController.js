@@ -149,31 +149,31 @@ const removeComment = asyncHandler(async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-const editPost = asyncHandler(async (req, res) => {
-  const postId = req.body.postId;
+const editFood = asyncHandler(async (req, res) => {
+  const foodId = req.body.foodId;
 
   try {
     // Use async/await with findById to ensure proper handling of asynchronous code.
-    const post = await Post.findById(postId);
+    const food = await Food.findById(foodId);
 
     // Check if the post was found.
-    if (!post) {
-      return res.status(404).json({ message: "Post not found" });
+    if (!food) {
+      return res.status(404).json({ message: "item food not found" });
     }
 
-    // Update the post's properties based on the request body data.
-    post.title = req.body.title;
-    post.content = req.body.content;
-    post.name = req.body.name;
-    post.agency = req.body.agency;
-    post.dateUpdated = req.body.dateUpdated;
-    // Save the updated post.
-    await post.save();
+    // Update the food's properties based on the request body data.
+    food.food_name = req.body.food_name;
+    food.price = req.body.price;
 
-    res.json(post.dateUpdated);
+    food.description = req.body.description;
+
+    // Save the updated foods.
+    await food.save();
+
+    res.json(food.dateUpdated);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-export { addFood, getFoods, removeFood };
+export { addFood, getFoods, removeFood, editFood };

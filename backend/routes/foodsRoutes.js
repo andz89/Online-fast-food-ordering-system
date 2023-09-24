@@ -3,6 +3,7 @@ import {
   addFood,
   getFoods,
   removeFood,
+  editFood,
 } from "../controllers/foodsController.js";
 import { protect } from "../middleware/authMiddleware.js";
 import multer from "multer";
@@ -39,7 +40,7 @@ router.post(
 // router.put("/addComment", protect, addComment);
 router.put("/removeFood", protect, removeFood);
 // router.put("/removeComment", protect, removeComment);
-// router.put("/editPost", protect, editPost);
+router.put("/editFood", protect, editFood);
 
 router.route("/").get(protect, getFoods);
 // router.route("/publicPosts").get(protect, getPublicPosts);

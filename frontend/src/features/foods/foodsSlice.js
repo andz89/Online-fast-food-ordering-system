@@ -43,13 +43,13 @@ const foodsSlice = createSlice({
     },
 
     foodEditted: (state, action) => {
-      const { postId, title, content, dateUpdated } = action.payload;
-      const existingPost = state.posts.find((post) => post._id === postId);
+      const { foodId, food_name, price, description } = action.payload;
+      const existingFood = state.foods.find((food) => food._id === foodId);
 
-      if (existingPost) {
-        existingPost.title = title;
-        existingPost.content = content;
-        existingPost.dateUpdated = dateUpdated;
+      if (existingFood) {
+        existingFood.food_name = food_name;
+        existingFood.description = description;
+        existingFood.price = price;
       }
     },
     removeFood: (state, action) => {

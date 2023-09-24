@@ -103,7 +103,8 @@ const Foods = () => {
             <TimeAgo timestamp={food.createdAt} />
             {food.createdAt !== food.updatedAt && (
               <span>
-                ;<small className="text-slate-500"> last update: </small>{" "}
+                ;<br></br>
+                <small className="text-slate-500"> last update: </small>{" "}
                 <TimeAgo timestamp={food.updatedAt} />
               </span>
             )}
