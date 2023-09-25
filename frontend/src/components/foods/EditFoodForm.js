@@ -15,16 +15,16 @@ const EditFoodForm = ({ handleHideEditForm, editFoodId }) => {
   const [food_name, setFood_name] = useState(foodToEdit[0].food_name);
   const [price, setPrice] = useState(foodToEdit[0].price);
   const [description, setDescription] = useState(foodToEdit[0].description);
-  const [image_one, setImageOne] = useState(foodToEdit[0].image_one);
-  const [image_two, setImageTwo] = useState(foodToEdit[0].image_two);
+  const [image_one, setImageOne] = useState();
+  const [image_two, setImageTwo] = useState();
 
   const foodId = foodToEdit[0]._id;
   const dispatch = useDispatch();
   const onNameChanged = (e) => setFood_name(e.target.value);
   const onPriceChanged = (e) => setPrice(e.target.value);
   const onDescriptionChanged = (e) => setDescription(e.target.value);
-  const onImageOneChanged = (e) => setImageOne(e.target.value);
-  const onImageTwoChanged = (e) => setImageTwo(e.target.value);
+  const onImageOneChanged = (e) => setImageOne(e.target.files[0]);
+  const onImageTwoChanged = (e) => setImageTwo(e.target.files[0]);
 
   const canSave = Boolean(food_name) && Boolean(price);
 
@@ -32,23 +32,26 @@ const EditFoodForm = ({ handleHideEditForm, editFoodId }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (food_name && price) {
+      const formData = new FormData();
+
+      image_one && formData.append("image_one", image_one);
+      image_two && formData.append("image_two", image_two);
+      formData.append("foodId", foodId);
+
+      formData.append("food_name", food_name);
+      formData.append("price", price);
+      formData.append("description", description);
+
       try {
-        const dateUpdated = await editFood({
-          foodId,
-          food_name,
-          price,
-          description,
-          image_one,
-          image_two,
-        }).unwrap();
+        const editFoodITem = await editFood(formData).unwrap();
 
         const data = {
           foodId,
           food_name,
           price,
           description,
-          image_one,
-          image_two,
+          image_one: editFoodITem.image_one,
+          image_two: editFoodITem.image_two,
         };
 
         dispatch(foodEditted(data));
@@ -80,7 +83,7 @@ const EditFoodForm = ({ handleHideEditForm, editFoodId }) => {
   return (
     <>
       <section className="fixed top-0 left-0 right-0 z-50     p-4 overflow-x-hidden bg-slate-900 bg-opacity-40 overflow-y-auto md:inset-0 h-[calc(100%-1rem)]  h-screen  flex items-center justify-center ">
-        <form className="flex flex-col bg-white w-[400px]   p-2  overflow-y-scroll h-[600px]">
+        <form className="flex flex-col bg-white w-[600px]   p-2  overflow-y-scroll h-[600px]">
           <div className="flex justify-between items-center">
             <div className="bg-teal-700 p-2 rounded text-white font-semibold my-2">
               Edit Food Item
@@ -155,15 +158,19 @@ const EditFoodForm = ({ handleHideEditForm, editFoodId }) => {
               name="image_one"
               onChange={onImageOneChanged}
             />
-            <img src={image_one} alt="" />
+            <div className="px-5 py-3">
+              <img src={foodToEdit[0].image_one} alt="" width={300} />
+            </div>
             <input
               className="mt-5"
               type="file"
               accept="image/*"
               name="image_two"
               onChange={onImageTwoChanged}
-            />
-            <img src={image_two} alt="" />
+            />{" "}
+            <div className="px-5 py-3">
+              <img src={foodToEdit[0].image_two} alt="" width={300} />
+            </div>
           </div>
 
           <button

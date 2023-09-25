@@ -21,7 +21,9 @@ const storage = multer.diskStorage({
     cb(null, getString() + "-" + uuidv4() + path.extname(file.originalname));
   },
 });
+
 const upload = multer({ storage: storage });
+
 router.post(
   "/addFood",
   protect,
@@ -40,7 +42,21 @@ router.post(
 // router.put("/addComment", protect, addComment);
 router.put("/removeFood", protect, removeFood);
 // router.put("/removeComment", protect, removeComment);
-router.put("/editFood", protect, editFood);
+router.put(
+  "/editFood",
+  protect,
+  upload.fields([
+    {
+      name: "image_one",
+      maxCount: 1,
+    },
+    {
+      name: "image_two",
+      maxCount: 1,
+    },
+  ]),
+  editFood
+);
 
 router.route("/").get(protect, getFoods);
 // router.route("/publicPosts").get(protect, getPublicPosts);

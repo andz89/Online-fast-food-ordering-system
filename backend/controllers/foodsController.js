@@ -21,7 +21,7 @@ const addFood = asyncHandler(async (req, res) => {
 
   req.body.image_two = image_two;
   req.body.image_one = image_one;
-  console.log(req.body);
+
   if (!req.body.food_name || !req.body.price || !req.body.description) {
     res.status(400);
     throw new Error("Please add a text field");
@@ -57,39 +57,15 @@ const getPublicPosts = asyncHandler(async (req, res) => {
   const posts = await Post.find();
   res.json(posts);
 });
-const addComment = asyncHandler(async (req, res) => {
-  const post = await Post.findById(req.body.postId);
-
-  const commentData = {
-    commentId: req.body.commentId,
-    postId: req.body.postId,
-    name: req.body.name,
-    comment: req.body.comment,
-    date: req.body.date,
-    userId: req.user._id,
-  };
-  if (post) {
-    post.comments.push(commentData);
-
-    await post.save();
-
-    res.json({
-      comment: commentData,
-    });
-  } else {
-    res.status(404);
-    throw new Error("User not found");
-  }
-});
 
 const removeFood = asyncHandler(async (req, res) => {
   const foodId = req.body.foodId;
 
-  // const food = await Food.findById(foodId);
+  const food = await Food.findById(foodId);
 
-  // let arrayImgs = [food.image_one, food.image_two];
+  let arrayImgs = [food.image_one, food.image_two];
 
-  // await deleteImage(arrayImgs)
+  await deleteImage(arrayImgs);
   try {
     // Use async/await with findByIdAndRemove to ensure proper handling of asynchronous code.
     const removedPost = await Food.findByIdAndRemove(foodId);
@@ -161,6 +137,16 @@ const editFood = asyncHandler(async (req, res) => {
       return res.status(404).json({ message: "item food not found" });
     }
 
+    req.files.image_one &&
+      req.files.image_one.forEach((e) => {
+        food.image_one = e.filename;
+      });
+
+    req.files.image_two &&
+      req.files.image_two.forEach((e) => {
+        food.image_two = e.filename;
+      });
+
     // Update the food's properties based on the request body data.
     food.food_name = req.body.food_name;
     food.price = req.body.price;
@@ -169,8 +155,9 @@ const editFood = asyncHandler(async (req, res) => {
 
     // Save the updated foods.
     await food.save();
-
-    res.json(food.dateUpdated);
+    food.image_one = process.env.DOMAIN + "/" + food.image_one;
+    food.image_two = process.env.DOMAIN + "/" + food.image_two;
+    res.json(food);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

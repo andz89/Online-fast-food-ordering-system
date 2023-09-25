@@ -43,7 +43,7 @@ const AddFoodForm = ({ hideAddForm }) => {
       formData.append("food_name", food_name);
       formData.append("price", price);
       formData.append("description", description);
-
+      console.log(formData);
       try {
         const dataFromServer = await addFood(formData).unwrap();
 

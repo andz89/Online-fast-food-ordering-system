@@ -11,6 +11,13 @@ export const foodsApiSlice = apiSlice.injectEndpoints({
         body: data, // Ensure data is properly included in the request body
       }),
     }),
+    EditFood: builder.mutation({
+      query: (data) => ({
+        url: `${FOOD_URL}/EditFood`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
     getFoods: builder.mutation({
       //get organizer FOOD
       query: () => ({
@@ -33,13 +40,7 @@ export const foodsApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
-    EditFood: builder.mutation({
-      query: (data) => ({
-        url: `${FOOD_URL}/EditFood`,
-        method: "PUT",
-        body: { ...data },
-      }),
-    }),
+
     uploadImage: builder.mutation({
       query: (formData) => ({
         url: `${FOOD_URL}/upload-image`, // The endpoint for image upload
@@ -52,10 +53,10 @@ export const foodsApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useAddFoodMutation,
+  useEditFoodMutation,
   useGetFoodsMutation,
 
   useDeleteFoodMutation,
 
-  useEditFoodMutation,
   useUploadImageMutation,
 } = foodsApiSlice;

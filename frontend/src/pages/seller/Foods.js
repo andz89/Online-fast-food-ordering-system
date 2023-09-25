@@ -19,7 +19,7 @@ import { toast } from "react-toastify";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import EditFoodForm from "../../components/foods/EditFoodForm";
 import AddFoodForm from "../../components/foods/AddFoodForm";
-
+import MiniLoading from "../../components/MiniLoading";
 const Foods = () => {
   const dispatch = useDispatch();
 
@@ -179,8 +179,7 @@ const Foods = () => {
         )}
       </div>
       {showAddForm && <AddFoodForm hideAddForm={hideAddForm} />}
-
-      {renderedFoods}
+      {getFoodsLoading ? <MiniLoading /> : renderedFoods}
     </div>
   );
 };
