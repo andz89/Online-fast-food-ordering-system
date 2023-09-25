@@ -43,8 +43,15 @@ const foodsSlice = createSlice({
     },
 
     foodEditted: (state, action) => {
-      const { foodId, food_name, price, description, image_one, image_two } =
-        action.payload;
+      const {
+        foodId,
+        food_name,
+        price,
+        description,
+        image_one,
+        image_two,
+        updatedAt,
+      } = action.payload;
       const existingFood = state.foods.find((food) => food._id === foodId);
 
       if (existingFood) {
@@ -53,6 +60,7 @@ const foodsSlice = createSlice({
         existingFood.price = price;
         existingFood.image_one = image_one;
         existingFood.image_two = image_two;
+        existingFood.updatedAt = updatedAt;
       }
     },
     removeFood: (state, action) => {

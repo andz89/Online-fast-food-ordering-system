@@ -46,7 +46,7 @@ const AddFoodForm = ({ hideAddForm }) => {
       console.log(formData);
       try {
         const dataFromServer = await addFood(formData).unwrap();
-
+        console.log(dataFromServer);
         const data = {
           food_name: dataFromServer.food.food_name,
           price: dataFromServer.food.price,
@@ -56,9 +56,8 @@ const AddFoodForm = ({ hideAddForm }) => {
           image_two: dataFromServer.food.image_two,
 
           _id: dataFromServer.food._id,
-
-          dateCreated: dataFromServer.food.dateCreated,
-          dateUpdated: dataFromServer.food.dateUpdated,
+          updatedAt: dataFromServer.food.updatedAt,
+          createdAt: dataFromServer.food.createdAt,
         };
 
         dispatch(foodAdded(data));

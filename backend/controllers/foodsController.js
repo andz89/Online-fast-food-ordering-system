@@ -138,12 +138,18 @@ const editFood = asyncHandler(async (req, res) => {
     }
 
     req.files.image_one &&
-      req.files.image_one.forEach((e) => {
+      req.files.image_one.forEach(async (e) => {
+        let arrayImgs = [food.image_one];
+
+        await deleteImage(arrayImgs);
         food.image_one = e.filename;
       });
 
     req.files.image_two &&
-      req.files.image_two.forEach((e) => {
+      req.files.image_two.forEach(async (e) => {
+        let arrayImgs = [food.image_two];
+
+        await deleteImage(arrayImgs);
         food.image_two = e.filename;
       });
 

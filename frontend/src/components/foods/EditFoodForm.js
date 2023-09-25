@@ -44,7 +44,7 @@ const EditFoodForm = ({ handleHideEditForm, editFoodId }) => {
 
       try {
         const editFoodITem = await editFood(formData).unwrap();
-
+        console.log(editFoodITem);
         const data = {
           foodId,
           food_name,
@@ -52,6 +52,7 @@ const EditFoodForm = ({ handleHideEditForm, editFoodId }) => {
           description,
           image_one: editFoodITem.image_one,
           image_two: editFoodITem.image_two,
+          updatedAt: editFoodITem.updatedAt,
         };
 
         dispatch(foodEditted(data));
