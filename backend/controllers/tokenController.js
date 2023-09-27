@@ -23,15 +23,8 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
         res.status(401);
         throw new Error("Not authorized, token failed");
       }
-      const data = {
-        name: user.name,
-        email: user.email,
-        number: user.number,
-        agency: user.agency,
-        roles: user.roles,
-        userId: user._id,
-      };
 
+      let data = user;
       // create JWTs
       const accessToken = generateAccessToken(res, user.name, user.roles);
 

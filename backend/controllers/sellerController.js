@@ -20,6 +20,8 @@ const authUser = asyncHandler(async (req, res) => {
       email: user.email,
       roles: user.roles,
       userId: user._id,
+      number: user.number,
+      storeName: user.storeName,
     };
     // create JWTs
     const accessToken = generateAccessToken(res, user.name, user.roles);
@@ -36,32 +38,36 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, storeName, number } = req.body;
 
-  const userExists = await Seller.findOne({ email });
+  const sellerExists = await Seller.findOne({ email });
 
-  if (userExists) {
+  if (sellerExists) {
     res.status(400);
-    throw new Error("User already exists");
+    throw new Error("seller already exists");
   }
 
-  const roles = ["user"];
-  const user = await Seller.create({
+  const roles = ["seller"];
+  const seller = await Seller.create({
     name,
     email,
     password,
     roles,
+    storeName,
+    number,
   });
 
-  if (user) {
-    generateRefreshToken(res, user);
-    const roles = user.roles;
+  if (seller) {
+    generateRefreshToken(res, seller);
+    const roles = seller.roles;
     const data = {
-      name: user.name,
-      email: user.email,
-      roles: user.roles,
+      name: seller.name,
+      email: seller.email,
+      roles: seller.roles,
+      number: seller.number,
+      storeName: seller.storeName,
     };
-    const accessToken = generateAccessToken(res, user.name, roles);
+    const accessToken = generateAccessToken(res, seller.name, roles);
 
     res.status(201).json({
       data,

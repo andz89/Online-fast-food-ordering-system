@@ -21,6 +21,10 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    storeName: {
+      type: String,
+      required: true,
+    },
     roles: {
       type: [String], // Change the type to an array of strings
       required: true,
