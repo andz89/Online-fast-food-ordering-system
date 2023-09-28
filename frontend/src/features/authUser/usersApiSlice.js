@@ -66,6 +66,20 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    updateSeller: builder.mutation({
+      query: (data) => ({
+        url: `${SELLER}/profile`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
+    sellerImageBg: builder.mutation({
+      query: (data) => ({
+        url: `${SELLER}/imageBg`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
   }),
 });
 export const {
@@ -78,4 +92,6 @@ export const {
   useSellerLoginMutation,
   useSellerLogoutMutation,
   useSellerRegisterMutation,
+  useUpdateSellerMutation,
+  useSellerImageBgMutation,
 } = usersApiSlice;

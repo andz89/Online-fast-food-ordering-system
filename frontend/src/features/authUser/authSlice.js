@@ -14,11 +14,15 @@ const authSlice = createSlice({
       state.userInfo = action.payload;
       // localStorage.setItem("UserInfo", JSON.stringify(action.payload));
     },
+    addBg: (state, action) => {
+      state.userInfo.data.user.imageBg = action.payload;
+      // localStorage.setItem("UserInfo", JSON.stringify(action.payload));
+    },
     logout: (state, action) => {
       state.userInfo = null;
       // localStorage.removeItem("UserInfo");
     },
   },
 });
-export const { setCredentials, logout } = authSlice.actions;
+export const { setCredentials, logout, addBg } = authSlice.actions;
 export default authSlice.reducer;

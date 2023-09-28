@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Seller from "../models/sellerModel.js";
-
+import { deleteImage } from "../helper/deleteImage.js";
 import {
   generateRefreshToken,
   generateAccessToken,
@@ -38,7 +38,8 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, storeName, number } = req.body;
+  const { name, email, password, storeName, number, description, address } =
+    req.body;
 
   const sellerExists = await Seller.findOne({ email });
 
@@ -55,6 +56,8 @@ const registerUser = asyncHandler(async (req, res) => {
     roles,
     storeName,
     number,
+    description,
+    address,
   });
 
   if (seller) {
@@ -66,6 +69,8 @@ const registerUser = asyncHandler(async (req, res) => {
       roles: seller.roles,
       number: seller.number,
       storeName: seller.storeName,
+      description: seller.description,
+      address: seller.address,
     };
     const accessToken = generateAccessToken(res, seller.name, roles);
 
@@ -111,27 +116,45 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @desc    Update user profile
 // @route   PUT /api/users/profile
 // @access  Private
-const updateUserProfile = asyncHandler(async (req, res) => {
+const updateSellerProfile = asyncHandler(async (req, res) => {
   const user = await Seller.findById(req.user._id);
 
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
+    user.storeName = req.body.storeName;
+    user.number = req.body.number;
+    user.description = req.body.description;
+    user.address = req.body.address;
 
     const updatedUser = await user.save();
 
-    res.json({
-      userId: updatedUser._id,
-      name: updatedUser.name,
-      email: updatedUser.email,
-      roles: updatedUser.roles,
-    });
+    res.json(updatedUser);
   } else {
     res.status(404);
     throw new Error("User not found");
   }
 });
-// const updateUserProfile = asyncHandler(async (req, res) => {
+const updateImageBg = asyncHandler(async (req, res) => {
+  const user = await Seller.findById(req.user._id);
+
+  if (user) {
+    req.files.imageBg.forEach(async (e) => {
+      let arrayImgs = [user.imageBg];
+
+      user.imageBg && (await deleteImage(arrayImgs));
+      user.imageBg = e.filename;
+    });
+
+    const bgName = await user.save();
+
+    res.json(bgName);
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+// const updateSellerProfile = asyncHandler(async (req, res) => {
 //   const user = await User.findById(req.user._id);
 
 //   if (user) {
@@ -192,6 +215,7 @@ export {
   registerUser,
   logoutUser,
   getUserProfile,
-  updateUserProfile,
+  updateSellerProfile,
   updateUserPassword,
+  updateImageBg,
 };
