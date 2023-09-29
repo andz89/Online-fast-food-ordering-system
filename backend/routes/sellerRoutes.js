@@ -5,6 +5,7 @@ import {
   updateSellerProfile,
   registerUser,
   updateImageBg,
+  getSellers,
 } from "../controllers/sellerController.js";
 import { protect } from "../middleware/authMiddleware.js";
 import multer from "multer";
@@ -25,6 +26,7 @@ const router = express.Router();
 router.post("/", registerUser);
 router.post("/auth", authUser);
 router.post("/logout", logoutUser);
+router.get("/sellers", getSellers);
 
 router.route("/imageBg").put(
   protect,

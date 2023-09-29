@@ -209,7 +209,16 @@ const updateUserPassword = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 });
+const getSellers = asyncHandler(async (req, res) => {
+  const user = await Seller.find();
 
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
 export {
   authUser,
   registerUser,
@@ -218,4 +227,5 @@ export {
   updateSellerProfile,
   updateUserPassword,
   updateImageBg,
+  getSellers,
 };
