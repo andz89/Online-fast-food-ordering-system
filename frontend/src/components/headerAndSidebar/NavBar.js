@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../../features/authUser/usersApiSlice";
 import logo from "../../assets/panda.png";
 import { logout } from "../../features/authUser/authSlice";
+import { logoutFood } from "../../features/foods/foodsSlice";
+
 import { useNavigate } from "react-router-dom";
 const NavBar = () => {
   const navigage = useNavigate();
@@ -12,6 +14,8 @@ const NavBar = () => {
     try {
       await logoutApiCall().unwrap();
       dispatch(logout());
+      dispatch(logoutFood());
+
       navigage("/");
     } catch (error) {
       console.log(error);

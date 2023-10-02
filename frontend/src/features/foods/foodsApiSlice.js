@@ -25,11 +25,12 @@ export const foodsApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
-
-    getFood: builder.mutation({
-      query: () => ({
-        url: `${FOOD_URL}`,
-        method: "GET",
+    getFoodAsUser: builder.mutation({
+      //get organizer FOOD
+      query: (data) => ({
+        url: `${FOOD_URL}/menus`,
+        method: "POST",
+        body: data,
       }),
     }),
 
@@ -57,6 +58,7 @@ export const {
   useGetFoodsMutation,
 
   useDeleteFoodMutation,
+  useGetFoodAsUserMutation,
 
   useUploadImageMutation,
 } = foodsApiSlice;

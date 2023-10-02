@@ -44,6 +44,7 @@ function App() {
                  */}
 
                 <Route path="/" element={<StoreList />} />
+                <Route path="/foodList/:id" element={<FoodList />} />
 
                 <Route path="*" element={<NoPageFound />} />
                 <Route
@@ -79,7 +80,6 @@ function App() {
             </Route>
           </Routes>
         </div>
-        ;
       </Router>
       <ToastContainer />
     </>

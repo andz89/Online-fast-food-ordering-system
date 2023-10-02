@@ -6,6 +6,10 @@ const foodsSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    seller_id: {
+      type: String,
+      required: true,
+    },
     price: {
       type: Number,
       required: true,

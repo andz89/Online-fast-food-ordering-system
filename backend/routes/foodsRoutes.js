@@ -4,6 +4,7 @@ import {
   getFoods,
   removeFood,
   editFood,
+  getMenus,
 } from "../controllers/foodsController.js";
 import { protect } from "../middleware/authMiddleware.js";
 import multer from "multer";
@@ -57,6 +58,7 @@ router.put(
   ]),
   editFood
 );
+router.post("/menus", protect, getMenus);
 
 router.route("/").get(protect, getFoods);
 // router.route("/publicPosts").get(protect, getPublicPosts);

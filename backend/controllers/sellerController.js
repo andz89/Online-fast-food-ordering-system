@@ -22,6 +22,7 @@ const authUser = asyncHandler(async (req, res) => {
       userId: user._id,
       number: user.number,
       storeName: user.storeName,
+      imageBg: user.imageBg,
     };
     // create JWTs
     const accessToken = generateAccessToken(res, user.name, user.roles);
@@ -210,10 +211,16 @@ const updateUserPassword = asyncHandler(async (req, res) => {
   }
 });
 const getSellers = asyncHandler(async (req, res) => {
-  const user = await Seller.find();
+  const user = await Seller.find().select("-password -roles");
 
   if (user) {
-    res.json(user);
+    const modifiedSeller = user.map((e) => {
+      e.imageBg = process.env.DOMAIN + "/" + e.imageBg;
+
+      return e; // Return the modified object
+    });
+
+    res.json(modifiedSeller);
   } else {
     res.status(404);
     throw new Error("User not found");

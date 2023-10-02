@@ -28,6 +28,7 @@ const addFood = asyncHandler(async (req, res) => {
   }
 
   const food = await Food.create({
+    seller_id: req.user._id,
     food_name: req.body.food_name,
     price: req.body.price,
     description: req.body.description,
@@ -43,14 +44,33 @@ const addFood = asyncHandler(async (req, res) => {
 // @access  Private
 const getFoods = asyncHandler(async (req, res) => {
   const foods = await Food.find();
-
+  console.log("seller req");
   if (foods.length !== 0) {
-    foods[0].image_one = process.env.DOMAIN + "/" + foods[0].image_one;
-    foods[0].image_two = process.env.DOMAIN + "/" + foods[0].image_two;
-    res.json(foods);
+    let sellerFoods = foods.filter((e) => e.seller_id === req.user.id);
+    sellerFoods[0].image_one =
+      process.env.DOMAIN + "/" + sellerFoods[0].image_one;
+    sellerFoods[0].image_two =
+      process.env.DOMAIN + "/" + sellerFoods[0].image_two;
+    res.json(sellerFoods);
   } else {
     res.status(404);
     throw new Error("No Item Found");
+  }
+});
+const getMenus = asyncHandler(async (req, res) => {
+  const foods = await Food.find();
+
+  var sellerFoods = foods.filter((e) => e.seller_id === req.body.id);
+  if (sellerFoods.length !== 0) {
+    const modifiedSellerFoods = sellerFoods.map((e) => {
+      e.image_one = process.env.DOMAIN + "/" + e.image_one;
+      e.image_two = process.env.DOMAIN + "/" + e.image_two;
+      return e; // Return the modified object
+    });
+
+    res.json(modifiedSellerFoods);
+  } else {
+    res.json([]);
   }
 });
 const getPublicPosts = asyncHandler(async (req, res) => {
@@ -169,4 +189,4 @@ const editFood = asyncHandler(async (req, res) => {
   }
 });
 
-export { addFood, getFoods, removeFood, editFood };
+export { addFood, getMenus, getFoods, removeFood, editFood };

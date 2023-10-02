@@ -71,10 +71,15 @@ const foodsSlice = createSlice({
         state.foods = foods;
       }
     },
+    logoutFood: (state, action) => {
+      state.foods = [];
+
+      // localStorage.removeItem("UserInfo");
+    },
   },
 });
 
-export const { foodAdded, foodsFetched, removeFood, foodEditted } =
+export const { foodAdded, foodsFetched, removeFood, foodEditted, logoutFood } =
   foodsSlice.actions;
 
 export default foodsSlice.reducer;

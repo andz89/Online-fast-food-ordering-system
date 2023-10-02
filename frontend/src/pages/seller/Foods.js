@@ -26,6 +26,7 @@ const Foods = () => {
   const [getFoods, { isLoading: getFoodsLoading }] = useGetFoodsMutation();
   const [DeleteFood, { isLoading: deleteLoading }] = useDeleteFoodMutation();
   const { foods } = useSelector((state) => state.foods);
+
   const [showAddForm, setShowAddForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [editFoodId, setEditFoodId] = useState("");
