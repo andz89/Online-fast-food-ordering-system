@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const cartsSchema = mongoose.Schema(
   {
+    buyerId: {
+      type: String,
+      required: true,
+    },
     food_name: {
       type: String,
       required: true,

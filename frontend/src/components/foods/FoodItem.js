@@ -14,6 +14,7 @@ const FoodItem = () => {
   const { foods } = useSelector((state) => state.foods);
   const { sellers } = useSelector((state) => state.sellers);
 
+  const { userInfo } = useSelector((state) => state.auth);
   const { id } = useParams();
   const [food, setFood] = useState();
   const addFoodToCartFunc = async (data) => {
@@ -30,6 +31,7 @@ const FoodItem = () => {
     };
 
     const foodData = {
+      buyerId: userInfo.data.user._id,
       food_name: data[0].food_name,
       price: data[0].price,
       description: data[0].description,

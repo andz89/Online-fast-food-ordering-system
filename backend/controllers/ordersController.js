@@ -27,7 +27,12 @@ const getOrders = asyncHandler(async (req, res) => {
   const orders = await Order.find();
 
   if (orders) {
-    res.json(orders);
+    let userId = req.user._id.toString();
+    let order = orders.filter((food) => {
+      return food.orders[0].details.userId === userId;
+    });
+    console.log(order);
+    res.json(order);
   } else {
     res.status(404);
     throw new Error("foods not found");

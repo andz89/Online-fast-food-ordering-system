@@ -17,6 +17,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Main from "./components/headerAndSidebar/Main";
 import Foods from "./pages/seller/Foods";
 import Orders from "./pages/seller/Orders";
+import Orders_user from "./pages/users/Order";
+
 import Users from "./pages/seller/Users";
 import Tasks from "./pages/seller/Tasks";
 import Store from "./pages/seller/Store";
@@ -42,8 +44,7 @@ function App() {
 
               <Route path="" element={<Private allowedRoles={["user"]} />}>
                 <Route path="/profile-user" element={<ProfileUser />} />
-                {/* <Route path="/" element={<FoodList />} />
-                 */}
+                <Route path="/orders-user" element={<Orders_user />} />
 
                 <Route path="/" element={<StoreList />} />
                 <Route path="/foodList/:id" element={<FoodList />} />
