@@ -45,22 +45,24 @@ const Food_lists = () => {
     fetchData();
   }, []);
 
-  const orderedFoods = foods
+  const seqFoods = foods
     .slice()
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 
-  const renderedFoods = orderedFoods?.map((food) => (
+  const renderedFoods = seqFoods?.map((food) => (
     <article key={food._id} className="my-4">
       <div className=" relative z-0 w-full   p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700   ">
         <div className="md:flex items-start leading-none  flex-col flex ">
-          <div className="md:flex-shrink-0">
-            <img
-              draggable="false"
-              className="h-48  select-none w-full object-cover md:w-48"
-              src={food.image_one}
-              alt="Food Item"
-            />
-          </div>
+          <Link to={"/foodItem/" + food._id}>
+            <div className="md:flex-shrink-0">
+              <img
+                draggable="false"
+                className="h-48  select-none w-full object-cover md:w-48"
+                src={food.image_one}
+                alt="Food Item"
+              />
+            </div>
+          </Link>
           <div className="py-2 px-2 w-full ">
             <div className=" leading-none mb-0 uppercase tracking-wide text-sm text-indigo-500 font-semibold">
               {food.food_name}
@@ -81,7 +83,6 @@ const Food_lists = () => {
     <>
       {seller && (
         <>
-          {" "}
           <section className="bg-black bg-blend-multiply relative">
             <img
               src={seller[0]?.imageBg}
@@ -95,14 +96,6 @@ const Food_lists = () => {
               <p className="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">
                 {seller[0]?.description}
               </p>
-              <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-                <a
-                  href="#"
-                  className="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400"
-                >
-                  View Menu
-                </a>
-              </div>
             </div>
           </section>
           <section className="bg-white dark:bg-gray-900">

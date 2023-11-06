@@ -21,6 +21,8 @@ import Users from "./pages/seller/Users";
 import Tasks from "./pages/seller/Tasks";
 import Store from "./pages/seller/Store";
 import StoreList from "./pages/users/Store_list";
+import FoodItem from "./components/foods/FoodItem";
+import Cart from "./pages/users/Cart";
 function App() {
   return (
     <>
@@ -46,11 +48,13 @@ function App() {
                 <Route path="/" element={<StoreList />} />
                 <Route path="/foodList/:id" element={<FoodList />} />
 
+                <Route path="/cart" element={<Cart />} />
                 <Route path="*" element={<NoPageFound />} />
                 <Route
                   path="/updatePasswordUser"
                   element={<UpdatePasswordUser />}
                 />
+                <Route path="/foodItem/:id" element={<FoodItem />} />
               </Route>
 
               <Route path="" element={<Private allowedRoles={["seller"]} />}>

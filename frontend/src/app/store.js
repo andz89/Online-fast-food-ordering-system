@@ -5,6 +5,8 @@ import { apiSlice } from "../features/api/apiSlice";
 
 import foodsReducer from "../features/foods/foodsSlice";
 import sellersReducer from "../features/seller/sellersSlice";
+import cartsReducer from "../features/carts/cartsSlice";
+import ordersReducer from "../features/orders/ordersSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +14,8 @@ export const store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer,
     foods: foodsReducer,
     sellers: sellersReducer,
+    orders: ordersReducer,
+    carts: cartsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
