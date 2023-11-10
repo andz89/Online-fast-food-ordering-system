@@ -29,9 +29,10 @@ const getOrders = asyncHandler(async (req, res) => {
   if (orders) {
     let userId = req.user._id.toString();
     let order = orders.filter((food) => {
-      return food.orders[0].details.userId === userId;
+      console.log(food.orders[0].details.status);
+      return food.orders[0].orders.seller_id === userId;
     });
-    console.log(order);
+
     res.json(order);
   } else {
     res.status(404);

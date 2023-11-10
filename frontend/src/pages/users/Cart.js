@@ -309,14 +309,13 @@ const Food_list = () => {
               </div>
             )}
           </div>
-          <hr className="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700"></hr>
           {groupedData.map((food) => (
             <div
               key={food.seller_id}
-              className="relative overflow-x-auto my-6   bg-slate-300 shadow-md sm:rounded-lg"
+              className="relative overflow-x-auto my-6  border-pink-600 border-2 mx-2 shadow-md sm:rounded-lg"
             >
               <table className="w-full  text-sm text-left text-slate-900  ">
-                <thead className="border-b-2  border-gray-400  ">
+                <thead>
                   <tr>
                     <th className="flex flex-col px-5  py-3">
                       <span>
@@ -327,11 +326,12 @@ const Food_list = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-pink-100">
+
+                <tbody className="bg-white">
                   {food.items.map((item) => (
                     <tr
                       key={item.food_id}
-                      className="  flex  flex-col justify-around sm:flex-row items-center w-full border-b   hover:bg-pink-200  "
+                      className="  flex  flex-col justify-around sm:flex-row items-center w-full border-b   hover:bg-pink-100  "
                     >
                       <td className="px-6 py-4 font-semibold text-slate-900 dark:text-white">
                         <div className="flex items-center">

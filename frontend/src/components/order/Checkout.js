@@ -33,7 +33,8 @@ const Checkout = ({ orders, setCheckout, doneCheckout }) => {
       let order = {
         orders: groupedData[i],
         details: {
-          userId: userInfo.data.user._id,
+          status: "preparing",
+          buyerId: userInfo.data.user._id,
           buyerName: userInfo.data.user.name,
           buyerEmail: userInfo.data.user.email,
         },
@@ -45,7 +46,7 @@ const Checkout = ({ orders, setCheckout, doneCheckout }) => {
       const data = await setNewOrder({ arrayOrder }).unwrap();
       setCheckout(false);
       await doneCheckout();
-      navigate("/order");
+      navigate("/order-user");
     } catch (error) {
       console.log(error);
     }
