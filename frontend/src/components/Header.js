@@ -45,7 +45,7 @@ const Header = () => {
                     <Link to={"/cart"}>Cart</Link>
                   </li>
                   <li>
-                    <Link to={"/orders-user"}>Orders</Link>
+                    <Link to={"/order-user"}>Orders</Link>
                   </li>
                   <li className="hover:bg-[#F1418C] hover:text-white rounded p-1">
                     <Link to={"/profile-user"}>Profile</Link>

@@ -12,6 +12,8 @@ import ordersRoutes from "./routes/ordersRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import tokenRoutes from "./routes/tokenRoutes.js";
 import foodsRoutes from "./routes/foodsRoutes.js";
+import reviewRoutes from "./routes/reviewRoutes.js";
+
 const port = process.env.PORT || 5000;
 
 connectDB();
@@ -30,6 +32,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/token", tokenRoutes);
 app.use("/api/foods", foodsRoutes);
 app.use("/api/orders", ordersRoutes);
+app.use("/api/reviews", reviewRoutes);
 app.use(express.static("backend/public/images"));
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();

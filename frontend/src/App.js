@@ -44,7 +44,7 @@ function App() {
 
               <Route path="" element={<Private allowedRoles={["user"]} />}>
                 <Route path="/profile-user" element={<ProfileUser />} />
-                <Route path="/orders-user" element={<Orders_user />} />
+                <Route path="/order-user" element={<Orders_user />} />
 
                 <Route path="/" element={<StoreList />} />
                 <Route path="/foodList/:id" element={<FoodList />} />
@@ -62,15 +62,13 @@ function App() {
                 <Route element={<Main />}>
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/store" element={<Store />} />
-
                   <Route path="/foods" element={<Foods />} />
-
                   <Route path="/orders" element={<Orders />} />
                   <Route path="/users" element={<Users />} />
                   <Route path="/tasks" element={<Tasks />} />
-
                   <Route path="*" element={<NoPageFound />} />
                 </Route>
+
                 {/* <Route
                 path="/profile-organizer"
                 element={<ProfileOrganizer />}

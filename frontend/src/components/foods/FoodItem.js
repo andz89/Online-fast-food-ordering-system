@@ -24,6 +24,7 @@ const FoodItem = () => {
 
     const sellerInfo = {
       details: {
+        buyerId: userInfo.data.user._id,
         sellerName: seller_data[0].name,
         storeName: seller_data[0].storeName,
         address: seller_data[0].address,
@@ -75,7 +76,9 @@ const FoodItem = () => {
     return pathAndQuery;
   }
   const navigate = useNavigate();
-
+  const goBack = () => {
+    navigate(-1);
+  };
   useEffect(() => {
     if (foods.length === 0) {
       navigate("/");
@@ -95,10 +98,11 @@ const FoodItem = () => {
   return (
     <>
       <Header />
-      <div className="bg-slate-500 p-2      text-white font-semibold">
-        <Link to={"/"} className="cursor-pointer hover:underline">
-          Back to List
-        </Link>
+      <div
+        onClick={goBack}
+        className="bg-slate-500 p-2      text-white font-semibold"
+      >
+        <div className="cursor-pointer hover:underline">Back to List</div>
       </div>
       <div className="mt-3 flex flex-col justify-center items-center mx-auto">
         <div>

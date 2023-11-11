@@ -14,7 +14,10 @@ import { useGetSellersMutation } from "../../features/seller/sellersApiSlice";
 
 import MiniLoading from "../../components/MiniLoading";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import ReviewButton from "../../components/ReviewButton";
+import Reviews_view from "../../components/Reviews_view";
 const Food_lists = () => {
+  const [reviewDisplay, setReviewDisplay] = useState(false);
   const [seller, setSeller] = useState(false);
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -81,6 +84,12 @@ const Food_lists = () => {
   ));
   return (
     <>
+      {reviewDisplay && (
+        <Reviews_view
+          setReviewDisplay={setReviewDisplay}
+          storeName={seller[0].storeName}
+        />
+      )}
       {seller && (
         <>
           <section className="bg-black bg-blend-multiply relative">
@@ -93,9 +102,14 @@ const Food_lists = () => {
               <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
                 {seller[0]?.storeName}
               </h1>
+
               <p className="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">
                 {seller[0]?.description}
               </p>
+              <ReviewButton
+                setReviewDisplay={setReviewDisplay}
+                storeName={seller[0]?.storeName}
+              />
             </div>
           </section>
           <section className="bg-white dark:bg-gray-900">

@@ -27,13 +27,21 @@ const getOrders = asyncHandler(async (req, res) => {
   const orders = await Order.find();
 
   if (orders) {
-    let userId = req.user._id.toString();
-    let order = orders.filter((food) => {
-      console.log(food.orders[0].details.status);
-      return food.orders[0].orders.seller_id === userId;
-    });
+    if (req.user.roles[0] === "user") {
+      let userId = req.user._id.toString();
 
-    res.json(order);
+      let order = orders.filter((food) => {
+        return food.orders[0].details.buyerId === userId;
+      });
+      res.json(order);
+    } else if (req.user.roles[0] === "seller") {
+      let userId = req.user._id.toString();
+
+      let order = orders.filter((food) => {
+        return food.orders[0].orders.seller_id === userId;
+      });
+      res.json(order);
+    }
   } else {
     res.status(404);
     throw new Error("foods not found");
@@ -59,7 +67,6 @@ const removeFoodToCart = asyncHandler(async (req, res) => {
 const editOrder = asyncHandler(async (req, res) => {
   const orderId = req.body.orderId;
   const status = req.body.status;
-
   try {
     const order = await Order.findById(orderId);
 
@@ -68,15 +75,15 @@ const editOrder = asyncHandler(async (req, res) => {
     }
 
     // Update the food's properties based on the request body data.
-    order.details.status = status;
+    order.orders[0].details.status = status;
 
     // Mark the 'details' field as modified
-    order.markModified("details");
+    order.markModified("orders");
     // Save the updated order.
     const updatedOrder = await order.save();
 
     // Respond with the updated order data.
-    res.json(updatedOrder);
+    res.json(order);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

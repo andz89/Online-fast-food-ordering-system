@@ -7,6 +7,7 @@ import foodsReducer from "../features/foods/foodsSlice";
 import sellersReducer from "../features/seller/sellersSlice";
 import cartsReducer from "../features/carts/cartsSlice";
 import ordersReducer from "../features/orders/ordersSlice";
+import reviewsReducer from "../features/reviews/reviewsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     sellers: sellersReducer,
     orders: ordersReducer,
     carts: cartsReducer,
+    reviews: reviewsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
